@@ -57,7 +57,7 @@ func asyncInputs(redirect_input_yes bool, action_file string, wr *io.PipeWriter)
     }
 }
 
-func Run(x []string) {
+func Run() {
      opts := options.NewOptions()
      options.GetOptionsOnce(opts)
 
@@ -72,6 +72,9 @@ func Run(x []string) {
      if file, got := options.GetOptionsValue[string](opts, options.ActionFileFlag); got {
          actionFile = file
      }
+
+     qemuOpts := NewQemuOptions(opts)
+     x := qemuOpts.getCommand()
 
      remainings := x[1:]
      cmd := exec.Command(x[0], remainings...)
