@@ -6,13 +6,18 @@ import (
 
 type qemuOptions struct {
     imagePath string
-    diskPath string
+    drive1Path string
 }
 
 func NewQemuOptions(opt *options.Options) qemuOptions {
+    drive1Path := ""
+    if val, got := options.GetOptionsValue[string](opt, options.DriveFile1Flag); got {
+        drive1Path = val
+    }
+
     return qemuOptions{
         imagePath: "/tmp/alpine-virt-3.18.4-aarch64.iso",
-        diskPath: "/tmp/1.qcow2",
+        drive1Path: drive1Path,
     }
 }
 

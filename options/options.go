@@ -32,6 +32,7 @@ type Options struct {
 
 var RedirectInputFlag = "qemu_redirect_input"
 var ActionFileFlag = "qemu_action_file"
+var DriveFile1Flag = "drive_file1"
 
 func NewOptions() *Options {
     return &Options{
@@ -43,6 +44,10 @@ func NewOptions() *Options {
             ActionFileFlag: newOption(
                 "",
                 "path of action script"),
+
+            DriveFile1Flag: newOption(
+                "/tmp/1.qcow2",
+                "path of the first hard drive"),
         },
     }
 }
@@ -83,6 +88,11 @@ func optionsFromEnv(opts *Options) {
        ptr := GetOptionsPtr[string](opts, ActionFileFlag)
        *ptr = val
     }
+
+    if val, ok := os.LookupEnv(DriveFile1Flag); ok {
+       ptr := GetOptionsPtr[string](opts, DriveFile1Flag)
+       *ptr = val
+    }
 }
 
 
@@ -96,6 +106,11 @@ func optionsFromFlags(opts *Options) {
     if ptr, comment := GetOptionsInfo[string](opts, ActionFileFlag); true {
         default_val := *ptr
         flag.StringVar(ptr, ActionFileFlag, default_val, comment)
+    }
+
+    if ptr, comment := GetOptionsInfo[string](opts, DriveFile1Flag); true {
+        default_val := *ptr
+        flag.StringVar(ptr, DriveFile1Flag, default_val, comment)
     }
 
     // This function automatically handles parsing error and may exit the program as well.
