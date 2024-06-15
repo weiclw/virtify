@@ -1,7 +1,7 @@
 package main
 
 import (
-    runner "eigenlab/runner"
+    runner "virtify/runner"
 )
 
 func getCmdsReal() []string {

@@ -2,12 +2,12 @@ package runner
 
 import (
     "bufio"
-    "eigenlab/options"
     "fmt"
     "io"
     "os"
     "os/exec"
     "time"
+    "virtify/options"
 )
 
 func issueCommand(wr *io.PipeWriter, delay time.Duration, cmd []byte) {

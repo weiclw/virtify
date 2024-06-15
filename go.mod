@@ -1,4 +1,4 @@
-module eigenlab
+module virtify
 
 go 1.22.3
 
