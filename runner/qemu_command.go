@@ -22,6 +22,8 @@ func NewQemuOptions(opt *options.Options) qemuOptions {
 }
 
 func (opts *qemuOptions) getCommand() []string {
+    drive1opt := "if=none,media=disk,id=drive1,file=" + opts.drive1Path
+
     return []string{
         "/opt/homebrew/bin/qemu-system-aarch64",
         "-L",
@@ -54,5 +56,5 @@ func (opts *qemuOptions) getCommand() []string {
         "-device",
         "virtio-blk-pci,drive=drive1,bootindex=1",
         "-drive",
-        "if=none,media=disk,id=drive1,file=/tmp/1.qcow2"}
+        drive1opt}
 }
