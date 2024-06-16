@@ -7,6 +7,7 @@ import (
 type qemuOptions struct {
     imagePath string
     drive1Path string
+    sockNet string
 }
 
 func NewQemuOptions(opt *options.Options) qemuOptions {
@@ -15,16 +16,22 @@ func NewQemuOptions(opt *options.Options) qemuOptions {
         drive1Path = val
     }
 
+    sockNet := ""
+    if val, got := options.GetOptionsValue[string](opt, options.SockNetFlag); got {
+        sockNet = val
+    }
+
     return qemuOptions{
         imagePath: "/tmp/alpine-virt-3.18.4-aarch64.iso",
         drive1Path: drive1Path,
+        sockNet: sockNet,
     }
 }
 
 func (opts *qemuOptions) getCommand() []string {
     drive1opt := "if=none,media=disk,id=drive1,file=" + opts.drive1Path
 
-    return []string{
+    result := []string{
         "/opt/homebrew/bin/qemu-system-aarch64",
         "-L",
         "/Applications/UTM.app/Contents/Resources/qemu",
@@ -57,4 +64,15 @@ func (opts *qemuOptions) getCommand() []string {
         "virtio-blk-pci,drive=drive1,bootindex=1",
         "-drive",
         drive1opt}
+
+    if len(opts.sockNet) > 0 {
+        result = append(
+            result,
+            "-netdev",
+            "socket,id=net0," + opts.sockNet,
+            "-device",
+            "virtio-net-pci,netdev=net0")
+    }
+
+    return result
 }
