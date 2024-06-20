@@ -1,0 +1,28 @@
+How to run this tool?
+
+1. Install UTM on your mac.
+
+You can search and find a link to download and install the tool.
+This is a wrapper of qemu with all the firmwares that we need
+to run on a MAC. Specifically, we need the disk images:
+
+/Applications/UTM.app/Contents/Resources/qemu/edk2-aarch64-code.fd
+/Applications/UTM.app/Contents/Resources/qemu/edk2-arm-vars.fd
+
+for ARM Macs. We may need similar firmware hard disks for Intel
+based Macs as well.
+
+2. Install qemu via brew.
+
+Yes, UTM includes a runnable qemu. But UTM packages it differently
+such that we cannot launch it directly. And therefore there is a
+need to install qemu again.
+
+3. Run this tool.
+
+In root directory of the source code, use the command
+
+go run main.go --help
+
+to learn all possible options that you have, before actually
+running one.
