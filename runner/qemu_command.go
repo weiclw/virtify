@@ -44,8 +44,6 @@ func NewQemuOptions(opt *options.Options) qemuOptions {
 func (opts *qemuOptions) genInitialCommand() []string {
     return []string{
         "/opt/homebrew/bin/qemu-system-aarch64",
-        "-L",
-        "/Applications/UTM.app/Contents/Resources/qemu",
         "-cpu",
         "host",
         "-smp",
